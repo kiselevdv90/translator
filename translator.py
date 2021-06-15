@@ -30,16 +30,18 @@ while True :
 	playsound('hello.mp3')
 	os.remove('hello.mp3')
 
+
 	#ЗАПИСЫВАЕТ СЛОВА В БАЗУ ДАННЫХ
 	translator = sqlite3.connect('vocabulary.db')
 	data = translator.cursor()
-	data.execute('INSERT INTO vocabulary VALUES (?,?)', (Word_en, Word_ru))
+	data.execute(f'''SELECT Word_en FROM vocabulary WHERE Word_en = "{Word_en}"''')
+	if data.fetchone() is None :
+		data.execute(f'INSERT INTO vocabulary VALUES (?,?)', (Word_en, Word_ru))
+		translator.commit()
+		data.close()
+	else:	
+		print('Запись есть')
+		
 	data.close()
-	translator.commit()
-	
-
-
-
-
 	
 
