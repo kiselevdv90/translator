@@ -13,6 +13,7 @@ data.execute('''CREATE TABLE IF NOT EXISTS vocabulary (
 translator.commit()
 
 Question = input('Тренировка или перевод?  ')
+
 if Question == 'перевод':
 
 	while True :
@@ -49,18 +50,36 @@ if Question == 'перевод':
 else:	
 	r = data.execute('''SELECT * fROM vocabulary''').fetchall()
 	data.close()
-	while True:
-		a = choice(r)
-		print(a[1])
-		print(a[0])
-		b = input('Напиши перевод: ')
-		if b == 'все':
-			break
-		if a[0] == b:
-			print('Молодец!')
-		else:
-			print('Неправильно. Ответ: ' + a[0])
-		
+	languages = input('1 Русский-Английский, 2 Английский-Русский ')
+	if languages == 1:
+		while True:
+			a = choice(r)
+			print(a[1])
+			b = input('Напиши перевод: ')
+			if b == 'все':
+				break
+			if a[0] == b:
+				print('Молодец!')
+			else:
+				print('Неправильно. Ответ: ' + a[0])
+	else:
+		while True:
+			a = choice(r)
+			print(a[0])
+
+			tts = gTTS(a[0])
+			tts.save('hello.mp3')
+			playsound('hello.mp3')
+			os.remove('hello.mp3')
+
+			b = input('Напиши перевод: ')
+			if b == 'все':
+				break
+			if a[1] == b:
+				print('Молодец!')
+			else:
+				print('Неправильно. Ответ: ' + a[1])
+
 
 
 
