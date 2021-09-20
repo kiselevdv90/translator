@@ -37,10 +37,8 @@ if Question == 'перевод':
         print(Word_en)
 
         # ОЗВУЧИВАНИЕ ТЕКСТА
-        tts = gTTS(Word_en)
-        tts.save('hello.mp3')
-        playsound('hello.mp3')
-        os.remove('hello.mp3')
+        sound(Word_en)
+
 
         # ЗАПИСЫВАЕТ СЛОВА В БАЗУ ДАННЫХ
         translator = sqlite3.connect('vocabulary.db')
@@ -61,16 +59,13 @@ else:
     r = data.execute('''SELECT * fROM vocabulary''').fetchall()
     data.close()
     languages = input('1 Русский-Английский, 2 Английский-Русский ')
-    if languages == 1:
+    if languages == "1":
         while True:
             a = choice(r)
             print(a[1])
 
-            tts = gTTS(a[1])
-            tts.save('hello.mp3')
-            playsound('hello.mp3')
-            os.remove('hello.mp3')
-
+            sound(a[1])
+ 
             b = input('Напиши перевод: ')
             if b == 'все':
                 break
@@ -83,10 +78,8 @@ else:
             a = choice(r)
             print(a[0])
 
-            tts = gTTS(a[0])
-            tts.save('hello.mp3')
-            playsound('hello.mp3')
-            os.remove('hello.mp3')
+            sound(a[0])
+         
 
             b = input('Напиши перевод: ')
             if b == 'все':
@@ -95,12 +88,5 @@ else:
                 print('Молодец!')
             else:
                 print('Неправильно. Ответ: ' + a[1])
-
-
-
-
-
-
-
 	
 
